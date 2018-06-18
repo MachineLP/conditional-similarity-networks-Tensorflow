@@ -102,8 +102,11 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     sess.run(init)
     saver2 = tf.train.Saver(tf.global_variables())
     #if not train_all_layers:
-    saver_net = tf.train.Saver(variables_to_restore)
-    saver_net.restore(sess, checkpoint_path)
+    try:
+        saver_net = tf.train.Saver(variables_to_restore)
+        saver_net.restore(sess, checkpoint_path)
+    except:
+        pass
     
     
     # early stopping
