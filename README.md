@@ -20,7 +20,7 @@ What makes images similar? To measure the similarity between images, they are ty
 Images are passed through a convolutional network and projected into a nonlinear embedding such that different dimensions encode features for specific notions of similarity. Subsequent masks indicate which dimensions of the embedding are responsible for separate aspects of similarity. We can then compare objects according to various notions of similarity by selecting an appropriate masked subspace.
 
 ## Usage
-The detault setting for this repo is a CSN with fixed masks, an embedding dimension 64 and four notions of similarity.
+The detault setting for this repo is a CSN with fixed masks, an embedding dimension 128 and four notions of similarity.
 
 You can download the Zappos dataset as well as the training, validation and test triplets used in the paper with
 
