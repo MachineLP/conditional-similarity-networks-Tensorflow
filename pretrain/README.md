@@ -3,5 +3,7 @@
 tar zxvf vgg_16_2016_08_28.tar.gz
 
 cd pretrain
+
 mkdir vgg
+
 mv ~/vgg_16.ckpt vgg
