@@ -156,6 +156,10 @@ def train(train_data_trip, val_data_trip, test_data_trip):
                 print("Early stopping.")
                 print("Best valid loss was {:.6f} at epoch {}.".format(best_valid, best_valid_epoch))
                 break
+        
+        np.random.shuffle(train_data_trip)
+        np.random.shuffle(val_data_trip)
+        np.random.shuffle(test_data_trip)
 
     sess.close()
 
