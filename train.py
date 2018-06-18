@@ -108,7 +108,6 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     except:
         pass
     
-    
     # early stopping
     best_valid = np.inf
     best_valid_epoch = 0
