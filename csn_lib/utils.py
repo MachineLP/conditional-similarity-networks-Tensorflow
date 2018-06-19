@@ -46,9 +46,14 @@ def g_parameter(checkpoint_exclude_scopes):
     return variables_to_restore,variables_to_train
 
 def data_norm(img):
-    img = img / 255.0
-    img = img - 0.5
-    img = img * 2
+    # img = img / 255.0
+    # img = img - 0.5
+    # img = img * 2
+    r, g, b = cv2.split(img)
+    r = r - 127.5
+    g = g - 127.5
+    b = b - 127.5
+    img = cv2.merge([r,g,b])
     return img
 
 def get_next_batch_from_path(image_path, pointer, height, width, batch_size=64, training=True):
