@@ -82,7 +82,9 @@ def train(train_data_trip, val_data_trip, test_data_trip):
             mask_norm = (masknorm_norm_x + masknorm_norm_y + masknorm_norm_z) / 3
             embed_norm = (embed_norm_x + embed_norm_y + embed_norm_z) / 3
             mask_embed_norm = (tot_embed_norm_x + tot_embed_norm_y + tot_embed_norm_z) / 3
-    
+    #x: Anchor image,
+    #y: Distant (negative) image,
+    #z: Close (positive) image
     # print (mask_norm)
     loss_triplet = triplet_loss(embedded_x, embedded_z, embedded_y)
     loss_embedd = embed_norm / np.sqrt(batch_size)
