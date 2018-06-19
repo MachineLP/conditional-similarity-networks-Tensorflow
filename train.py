@@ -48,6 +48,17 @@ EARLY_STOP_PATIENCE = config.EARLY_STOP_PATIENCE
 embed_loss = config.embed_loss
 mask_loss = config.mask_loss
 
+def GPU_config(rate=0.5):
+
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    gpuConfig = tf.ConfigProto()
+    gpuConfig.allow_soft_placement = False
+    gpuConfig.gpu_options.allow_growth = True
+    gpuConfig.gpu_options.per_process_gpu_memory_fraction = rate
+
+    return gpuConfig
+
 
 def train(train_data_trip, val_data_trip, test_data_trip):
     train_n = len(train_data_trip)
@@ -97,7 +108,7 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     accuracy = tf.reduce_sum(loss)
     # accuracy = model_accuracy(net0, Y, num_classes)
     #------------------------------------------------------------------------------------#
-    sess = tf.Session()
+    sess = tf.Session(config=GPU_config())
     init = tf.global_variables_initializer()
     sess.run(init)
     saver2 = tf.train.Saver(tf.global_variables())
