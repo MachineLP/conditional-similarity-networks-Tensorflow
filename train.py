@@ -84,7 +84,7 @@ def train(train_data_trip, val_data_trip, test_data_trip):
             mask_embed_norm = (tot_embed_norm_x + tot_embed_norm_y + tot_embed_norm_z) / 3
     
     # print (mask_norm)
-    loss_triplet = triplet_loss(embedded_x, embedded_y,embedded_z)
+    loss_triplet = triplet_loss(embedded_x, embedded_z, embedded_y)
     loss_embedd = embed_norm / np.sqrt(batch_size)
     loss_mask = mask_norm / batch_size
     loss = loss_triplet + embed_loss * loss_embedd + mask_loss * loss_mask
