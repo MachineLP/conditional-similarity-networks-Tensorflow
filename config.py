@@ -26,7 +26,7 @@ EARLY_STOP_PATIENCE = 1000
 learning_r_decay = True
 learning_rate_base = 0.0001
 decay_rate = 0.95
-height, width = 224,224
+height, width = 112, 112
 # 迁移学习的网络模
 checkpoint_path = 'pretrain/vgg/vgg_16.ckpt'
 # 需要分类的类别数量,这个参数没用到
