@@ -107,8 +107,10 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     with tf.control_dependencies(update_ops):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss, global_step=global_step, var_list=tf.global_variables())
     # print ('>>>>>>', tf.global_variables())
-    accuracy = tf.reduce_sum(loss)
+    # accuracy = tf.reduce_sum(loss)
     # accuracy = model_accuracy(net0, Y, num_classes)
+    correct_pred = tf.greater(tf.reduce_sum(tf.square(tf.subtract(embedded_x, embedded_y))), tf.reduce_sum(tf.square(tf.subtract(embedded_x, embedded_z))))
+    accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
     #------------------------------------------------------------------------------------#
     sess = tf.Session(config=GPU_config())
     init = tf.global_variables_initializer()
