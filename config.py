@@ -7,7 +7,7 @@ embedding_size = 128
 # 定义风格的选择形式
 conditions = [0,1,2,3]
 # 最小批训练的大小
-batch_size = 16
+batch_size = 128
 # 选择使用的模型， 此处没有用到，但是可以加上。
 # arch_model="arch_vgg16"
 # 选择训练的网络层
