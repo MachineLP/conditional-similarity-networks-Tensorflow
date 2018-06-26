@@ -109,7 +109,7 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     # print ('>>>>>>', tf.global_variables())
     # accuracy = tf.reduce_sum(loss)
     # accuracy = model_accuracy(net0, Y, num_classes)
-    correct_pred = tf.greater(tf.reduce_sum(tf.square(tf.subtract(embedded_x, embedded_y))), tf.reduce_sum(tf.square(tf.subtract(embedded_x, embedded_z))))
+    correct_pred = tf.greater(tf.square(tf.subtract(embedded_x, embedded_y)), tf.square(tf.subtract(embedded_x, embedded_z)))
     accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
     #------------------------------------------------------------------------------------#
     sess = tf.Session(config=GPU_config())
