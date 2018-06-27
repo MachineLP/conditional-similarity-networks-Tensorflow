@@ -45,7 +45,7 @@ class NetArch(object):
                 # 1 x 1 x 512
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
-                net_vis = slim.fully_connected(net_vis, 64, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, 128, activation_fn=tf.nn.relu, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
