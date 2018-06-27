@@ -29,5 +29,7 @@ decay_rate = 0.95
 height, width = 112, 112
 # 迁移学习的网络模
 checkpoint_path = 'pretrain/vgg/vgg_16.ckpt'
+# checkpoint_path = 'pretrain/inception_v4/inception_v4.ckpt'
+# checkpoint_path = 'pretrain/resnet_v2/resnet_v2_50.ckpt'
 # 需要分类的类别数量,这个参数没用到
 num_classes = 10
