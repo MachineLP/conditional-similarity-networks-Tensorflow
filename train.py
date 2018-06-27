@@ -70,6 +70,7 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     X0,X1,X2, Y, is_train, keep_prob_fc = input_placeholder3(height, width, num_classes)
     C = tf.placeholder(tf.int32, [None, None])
 
+    # arch_resnet_v2_50, arch_inception_v4, arch_vgg16
     with tf.variable_scope("", reuse=tf.AUTO_REUSE) as scope:
         _, net_vis_x = NetArch().arch_vgg16(X0, num_classes, keep_prob_fc, is_train)
         _, net_vis_y = NetArch().arch_vgg16(X1, num_classes, keep_prob_fc, is_train)
