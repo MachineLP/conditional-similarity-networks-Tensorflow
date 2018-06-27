@@ -3,7 +3,7 @@
 # 定义风格， 检索的时候你想按照的多少类风格数。
 n_conditions = 4
 # 定义映射的特征维度
-embedding_size = 64
+embedding_size = 128
 # 定义风格的选择形式
 conditions = [0,1,2,3]
 # 最小批训练的大小
