@@ -20,14 +20,32 @@ def input_placeholder3(height, width, num_classes):
     is_train = tf.placeholder(tf.bool)
     keep_prob_fc = tf.placeholder(tf.float32)
     return X1, X2, X3, Y, is_train, keep_prob_fc
-def triplet_loss(anchor, positive, negative, alpha=1.):
+
+def hard_sample_loss(batch_size, ce_loss):
+    num_examples = batch_size
+    n_selected = num_examples/2   # 相当于选择一般进行权重的更新
+    # find the most wrongly classified examples:
+    n_selected = tf.cast(n_selected, tf.int32)
+    vals, _ = tf.nn.top_k(ce_loss, k=n_selected)
+    # 选择的topk的loss中的最小值，为了下面获得loss的mask，值为[1,1,0,0,1,1,1,1]
+    th = vals[-1]
+    selected_mask = ce_loss >= th # 得到类似的mask = [1,1,0,0,1,1,1,1]
+    loss_weight = tf.cast(selected_mask, tf.float32)
+    loss =  tf.reduce_sum(ce_loss*loss_weight) / tf.reduce_sum(loss_weight)
+    return loss
+
+def triplet_loss(anchor, positive, negative, batch_size, alpha=1., hard_sample=True):
     with tf.variable_scope('triplet_loss'):
         pos_dist = tf.reduce_sum(tf.square(tf.subtract(anchor, positive)), 1)
         neg_dist = tf.reduce_sum(tf.square(tf.subtract(anchor, negative)), 1)
         
         basic_loss = tf.add(tf.subtract(pos_dist,neg_dist), alpha)
-        loss = tf.reduce_mean(tf.maximum(basic_loss, 0.0), 0)
+        if hard_sample:
+            loss = hard_sample_loss(batch_size, tf.maximum(basic_loss, 0.0))
+        else:
+            loss = tf.reduce_mean(tf.maximum(basic_loss, 0.0), 0)
     return loss
+
 def g_parameter(checkpoint_exclude_scopes):
     exclusions = []
     if checkpoint_exclude_scopes:
