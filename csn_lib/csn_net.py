@@ -24,6 +24,12 @@ try:
 except:
     from csn_lib.vgg import vgg_arg_scope, vgg_16, vgg_16_conv
 
+def l2norm_embed(x):
+    norm2 = tf.norm(x, ord=2, axis=1)
+    norm2 = tf.reshape(norm2,[-1,1])
+    l2norm = x/norm2
+    return l2norm
+
 def l2norm(x):
     norm2 = tf.norm(x, ord=2, axis=1)
     return norm2
