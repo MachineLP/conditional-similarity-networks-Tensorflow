@@ -54,6 +54,32 @@ class NetArch(object):
                 net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
+    
+    def arch_vgg16_multi_conv(self, X, num_classes,dropout_keep_prob=0.8, is_train=False,embedding_size=64):
+        arg_scope = vgg_arg_scope()
+        with slim.arg_scope(arg_scope):
+            _, end_points, net_c = vgg_16_conv(X, is_training=is_train)
+        with slim.arg_scope([slim.conv2d, slim.max_pool2d, slim.avg_pool2d], stride=1, padding='SAME'):
+            with tf.variable_scope('Logits_out'):
+                #net_1 = slim.max_pool2d(net_c[-5], [32,32], stride=32, padding='VALID', scope='net_c_1')
+                #net_1 = slim.conv2d(net_1, net_1.get_shape()[3], [1, 1], scope='net_1')
+                #net_2 = slim.max_pool2d(net_c[-4], [16,16], stride=16, padding='VALID', scope='net_c_1')
+                #net_2 = slim.conv2d(net_2, net_2.get_shape()[3], [1, 1], scope='net_2')
+                #net_3 = slim.max_pool2d(net_c[-3], [8,8], stride=8, padding='VALID', scope='net_c_1')
+                #net_3 = slim.conv2d(net_3, net_3.get_shape()[3], [1, 1], scope='net_3')
+                net_4 = slim.max_pool2d(net_c[-2], [4,4], stride=4, padding='VALID', scope='net_c_1')
+                net_4 = slim.conv2d(net_4, net_4.get_shape()[3], [1, 1], scope='net_4')
+                net_5 = slim.max_pool2d(net_c[-1], [2,2], stride=2, padding='VALID', scope='net_c_1')
+                net_5 = slim.conv2d(net_5, net_5.get_shape()[3], [1, 1], scope='net_5')
+                # net_vis = tf.concat([net_1, net_2, net_3, net_4, net_5],3)
+                net_vis = tf.concat([net_4, net_5],3)
+                net_vis = slim.avg_pool2d(net_vis, net_vis.get_shape()[1:3], padding='VALID', scope='AvgPool_1a_out')
+                # 1 x 1 x 512
+                net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
+                net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
+        return net, net_vis
 
     def arch_inception_v4(self, X, num_classes, dropout_keep_prob=0.8, is_train=False, embedding_size=128):
         arg_scope = inception_v4_arg_scope()
