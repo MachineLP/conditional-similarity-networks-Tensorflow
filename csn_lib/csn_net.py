@@ -40,7 +40,7 @@ def l1norm(x):
 
 class NetArch(object):
 
-    def arch_vgg16(self, X, num_classes, dropout_keep_prob=0.8, is_train=False):
+    def arch_vgg16(self, X, num_classes, dropout_keep_prob=0.8, is_train=False, embedding_size=128):
         arg_scope = vgg_arg_scope()
         with slim.arg_scope(arg_scope):
             net_vis, end_points, _ = vgg_16_conv(X, is_training=is_train)
@@ -51,11 +51,11 @@ class NetArch(object):
                 # 1 x 1 x 512
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
-                net_vis = slim.fully_connected(net_vis, 128, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
-    def arch_inception_v4(self, X, num_classes, dropout_keep_prob=0.8, is_train=False):
+    def arch_inception_v4(self, X, num_classes, dropout_keep_prob=0.8, is_train=False, embedding_size=128):
         arg_scope = inception_v4_arg_scope()
         with slim.arg_scope(arg_scope):
             net_vis, end_points = inception_v4(X, is_training=is_train)
@@ -68,11 +68,11 @@ class NetArch(object):
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
                 # 1536
-                net_vis = slim.fully_connected(net_vis, 128, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
-    def arch_resnet_v2_50(self, X, num_classes, dropout_keep_prob=0.8, is_train=False):
+    def arch_resnet_v2_50(self, X, num_classes, dropout_keep_prob=0.8, is_train=False, embedding_size=128):
         arg_scope = resnet_arg_scope()
         with slim.arg_scope(arg_scope):
             net_vis, end_points = resnet_v2_50(X, is_training=is_train)
@@ -85,7 +85,7 @@ class NetArch(object):
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
                 # 1536
-                net_vis = slim.fully_connected(net_vis, 128, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
