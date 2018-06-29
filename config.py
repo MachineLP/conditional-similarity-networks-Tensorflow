@@ -2,6 +2,8 @@
 
 # 定义风格， 检索的时候你想按照的多少类风格数。
 n_conditions = 4
+# tploss margin
+margin = 0.5
 # 定义映射的特征维度
 embedding_size = 128
 # 定义风格的选择形式
