@@ -74,6 +74,20 @@ def data_norm(img):
     img = cv2.merge([r,g,b])
     return img
 
+def add_img_padding(img):
+    h, w, _ = img.shape
+    width = np.max([h, w])
+    # 按照长宽中大的初始化一个正方形
+    img_padding = np.zeros([width, width,3])
+    # 找出padding的中间位置
+    h1 = int(width/2-h/2)
+    h2 = int(width/2+h/2)
+    w1 = int(width/2-w/2)
+    w2 = int(width/2+w/2)
+    # 进行padding， img为什么也要进行扣取？ 原因在于除以2取整会>造成尺寸不一致的情况。
+    img_padding[h1:h2, w1:w2, :] = img[0:(h2-h1),0:(w2-w1),:]
+    return img_padding
+
 def get_next_batch_from_path(image_path, pointer, height, width, batch_size=64, training=True):
     batch_x0 = np.zeros([batch_size, height, width,3])
     batch_x1 = np.zeros([batch_size, height, width,3])
