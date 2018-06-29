@@ -36,6 +36,7 @@ num_classes = config.num_classes
 n_conditions = config.n_conditions
 embedding_size = config.embedding_size
 conditions = config.conditions
+margin = config.margin
 batch_size = config.batch_size
 dropout_prob = config.dropout_prob
 checkpoint_exclude_scopes = config.checkpoint_exclude_scopes
@@ -47,6 +48,7 @@ early_stop = config.early_stop
 EARLY_STOP_PATIENCE = config.EARLY_STOP_PATIENCE
 embed_loss = config.embed_loss
 mask_loss = config.mask_loss
+hard_sample_train = config.hard_sample_train
 
 def GPU_config(rate=0.5):
 
@@ -87,7 +89,7 @@ def train(train_data_trip, val_data_trip, test_data_trip):
     #y: Distant (negative) image,
     #z: Close (positive) image
     # print (mask_norm)
-    loss_triplet = triplet_loss(embedded_x,embedded_z,embedded_y,batch_size,alpha=0.5,hard_sample=False)
+    loss_triplet = triplet_loss(embedded_x,embedded_z,embedded_y,batch_size,alpha=margin,hard_sample=hard_sample_train)
     loss_embedd = embed_norm / np.sqrt(batch_size)
     loss_mask = mask_norm / batch_size
     loss = loss_triplet + embed_loss * loss_embedd + mask_loss * loss_mask
