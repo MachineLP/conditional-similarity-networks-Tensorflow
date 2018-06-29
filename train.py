@@ -72,9 +72,9 @@ def train(train_data_trip, val_data_trip, test_data_trip):
 
     # arch_resnet_v2_50, arch_inception_v4, arch_vgg16
     with tf.variable_scope("", reuse=tf.AUTO_REUSE) as scope:
-        _, net_vis_x = NetArch().arch_vgg16(X0, num_classes, keep_prob_fc, is_train)
-        _, net_vis_y = NetArch().arch_vgg16(X1, num_classes, keep_prob_fc, is_train)
-        _, net_vis_z = NetArch().arch_vgg16(X2, num_classes, keep_prob_fc, is_train)
+        _, net_vis_x = NetArch().arch_vgg16(X0, num_classes, keep_prob_fc, is_train, embedding_size)
+        _, net_vis_y = NetArch().arch_vgg16(X1, num_classes, keep_prob_fc, is_train, embedding_size)
+        _, net_vis_z = NetArch().arch_vgg16(X2, num_classes, keep_prob_fc, is_train, embedding_size)
         with tf.variable_scope("Logits_csn"):
             csn = ConditionalSimNet(n_conditions, embedding_size, learnedmask=True, prein=True)
             embedded_x, masknorm_norm_x, embed_norm_x, tot_embed_norm_x = csn.forward(net_vis_x, C)
