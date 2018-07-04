@@ -28,10 +28,10 @@ class load_image(object):
         label = []
         for i in range (img_num):
             img_path = os.path.join(self.img_dir, img_sub_dir, img_all_path[i])
-            if cv2.imread(img_path) is not None:
-                data.append(img_path)
-                # print (img_path)
-                label.append(int(img_label))
+            # if cv2.imread(img_path) is not None:
+            data.append(img_path)
+            # print (img_path)
+            label.append(int(img_label))
         return data, label
 
     def _load_database_path(self):
