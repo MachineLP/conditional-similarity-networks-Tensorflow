@@ -118,5 +118,25 @@ def get_next_batch_from_path(image_path, pointer, height, width, batch_size=64, 
         C[i,:] = img_pairs[3]
     return batch_x0,batch_x1,batch_x2,C
 
+def shuffle_data(train_imgs):
+    index = [i for i in range(len(train_imgs))]
+    np.random.shuffle(index)
+    train_imgs = np.asarray(train_imgs)
+    train_imgs = train_imgs[index]
+    return train_imgs
 
+def create_pairs(digit_indices, num_classes):
+    pairs = []
+    n = min([len(digit_indices[d]) for d in range(num_classes)]) - 1  # 最小
+类别数
+    for d in range(num_classes):
+        for i in range(n):
+            np.random.shuffle(digit_indices[d])
+            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+            inc = random.randrange(1, num_classes)
+            dn = (d + inc) % num_classes
+            z3 = digit_indices[dn][i]
+            pairs += [[z1, z3, z2, 0]]
+    pairs = shuffle_data(pairs)
+    return np.asarray(pairs)
 
