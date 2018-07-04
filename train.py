@@ -15,6 +15,11 @@ except:
     from csn_lib.image_loader import TripletImageLoader
 
 try:
+    from data_load import load_image
+except:
+    from csn_lib.data_load import load_image
+    
+try:
     from csn_net import ConditionalSimNet, NetArch
 except:
     from csn_lib.csn_net import ConditionalSimNet, NetArch
@@ -24,9 +29,9 @@ except:
     from csn_lib import config
 
 try:
-    from utils import input_placeholder3, triplet_loss, g_parameter, get_next_batch_from_path
+    from utils import input_placeholder3, triplet_loss, g_parameter, get_next_batch_from_path, create_pairs
 except:
-    from csn_lib.utils import input_placeholder3, triplet_loss, g_parameter, get_next_batch_from_path
+    from csn_lib.utils import input_placeholder3, triplet_loss, g_parameter, get_next_batch_from_path, create_pairs
 
 
 height = config.height
@@ -191,3 +196,14 @@ if __name__ == '__main__':
     test_data_trip = TripletImageLoader('data', 'ut-zap50k-images', 'filenames.json', conditions, 'test', n_triplets=160000).get_trip_data()
     print (test_data_trip[:100])
     train(train_data_trip, val_data_trip, test_data_trip)
+    
+    '''
+    sample_dir = '/home/datalab/ex_disk/work/lepeng/shoes_SMA/data/train'
+    train_rate = 0.9
+    num_classes = 3
+    train_data, train_label, valid_data, valid_label, train_n, valid_n, note_label = load_image(sample_dir, train_rate).gen_train_valid()
+    train_data_trip = create_pairs(train_data, num_classes)
+    val_data_trip = create_pairs(train_data, num_classes)
+    test_data_trip = create_pairs(train_data, num_classes)
+    train(train_data_trip, val_data_trip, test_data_trip)
+    '''
