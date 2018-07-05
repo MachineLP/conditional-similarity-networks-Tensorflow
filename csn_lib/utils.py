@@ -125,7 +125,7 @@ def shuffle_data(train_imgs):
     train_imgs = train_imgs[index]
     return train_imgs
 
-def create_pairs(digit_indices, num_classes):
+def create_pairs(digit_indices, num_classes, condition_classes):
     pairs = []
     n = min([len(digit_indices[d]) for d in range(num_classes)]) - 1  # 最小类别数
     for d in range(num_classes):
@@ -135,7 +135,7 @@ def create_pairs(digit_indices, num_classes):
             inc = random.randrange(1, num_classes)
             dn = (d + inc) % num_classes
             z3 = digit_indices[dn][i]
-            pairs += [[z1, z3, z2, 0]]
+            pairs += [[z1, z3, z2, condition_classes]]
     pairs = shuffle_data(pairs)
     return np.asarray(pairs)
 
