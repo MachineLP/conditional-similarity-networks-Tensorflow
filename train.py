@@ -191,9 +191,9 @@ def train(train_data_trip, val_data_trip, test_data_trip):
 
     sess.close()
 
-def gen_train_val_data(sample_dir, train_rate, condition_classes):
+def gen_train_val_data(sample_dir, train_rate, num_classes, condition_classes):
     train_data, train_label, valid_data, valid_label, train_n, valid_n, note_label = load_image(sample_dir, 1.0).gen_train_valid()
-    train_data_trip = create_pairs(train_data, condition_classes)
+    train_data_trip = create_pairs(train_data, num_classes, condition_classes)
     train_num = int(train_n*train_rate)
     train_data_trip = train_data_trip[0:train_num]
     val_data_trip = train_data_trip[-train_num:-1]
@@ -213,7 +213,8 @@ if __name__ == '__main__':
     '''
     sample_dir = 'gender'
     train_rate = 0.9
-    condition_classes = 3
-    train_data_trip, val_data_trip, test_data_trip = gen_train_val_data(sample_dir, train_rate, condition_classes)
+    condition_classes = 0
+    num_classes = 4
+    train_data_trip, val_data_trip, test_data_trip = gen_train_val_data(sample_dir, train_rate, num_classes, condition_classes)
     train(train_data_trip, val_data_trip, test_data_trip)
     '''
