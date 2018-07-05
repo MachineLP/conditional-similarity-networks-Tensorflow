@@ -127,8 +127,7 @@ def shuffle_data(train_imgs):
 
 def create_pairs(digit_indices, num_classes):
     pairs = []
-    n = min([len(digit_indices[d]) for d in range(num_classes)]) - 1  # 最小
-类别数
+    n = min([len(digit_indices[d]) for d in range(num_classes)]) - 1  # 最小类别数
     for d in range(num_classes):
         for i in range(n):
             np.random.shuffle(digit_indices[d])
