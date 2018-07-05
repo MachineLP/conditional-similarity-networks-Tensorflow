@@ -68,6 +68,11 @@ def GPU_config(rate=0.5):
 
 
 def train(train_data_trip, val_data_trip, test_data_trip):
+    
+    np.random.shuffle(train_data_trip)
+    np.random.shuffle(val_data_trip)
+    np.random.shuffle(test_data_trip)
+    
     train_n = len(train_data_trip)
     # print ('pairs_data', train_data)
     valid_n = len(val_data_trip)
@@ -186,6 +191,14 @@ def train(train_data_trip, val_data_trip, test_data_trip):
 
     sess.close()
 
+def gen_train_val_data(sample_dir, train_rate, condition_classes):
+    train_data, train_label, valid_data, valid_label, train_n, valid_n, note_label = load_image(sample_dir, 1.0).gen_train_valid()
+    train_data_trip = create_pairs(train_data, condition_classes)
+    train_num = int(train_n*train_rate)
+    train_data_trip = train_data_trip[0:train_num]
+    val_data_trip = train_data_trip[-train_num:-1]
+    test_data_trip = val_data_trip
+    return train_data_trip, val_data_trip, test_data_trip
 
 if __name__ == '__main__':
     # 获取训练数据
@@ -198,12 +211,9 @@ if __name__ == '__main__':
     train(train_data_trip, val_data_trip, test_data_trip)
     
     '''
-    sample_dir = '/home/datalab/ex_disk/work/lepeng/shoes_SMA/data/train'
+    sample_dir = 'gender'
     train_rate = 0.9
-    num_classes = 3
-    train_data, train_label, valid_data, valid_label, train_n, valid_n, note_label = load_image(sample_dir, train_rate).gen_train_valid()
-    train_data_trip = create_pairs(train_data, num_classes)
-    val_data_trip = create_pairs(train_data, num_classes)
-    test_data_trip = create_pairs(train_data, num_classes)
+    condition_classes = 3
+    train_data_trip, val_data_trip, test_data_trip = gen_train_val_data(sample_dir, train_rate, condition_classes)
     train(train_data_trip, val_data_trip, test_data_trip)
     '''
