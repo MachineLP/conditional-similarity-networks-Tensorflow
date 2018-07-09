@@ -41,7 +41,7 @@ mask_loss = config.mask_loss
 hard_sample_train = config.hard_sample_train
 
 
-MODEL_DIR = "model/"
+MODEL_DIR = "../model/"
 MODEL_NAME = "csn_model.pb"
 if not tf.gfile.Exists(MODEL_DIR): #创建目录
     tf.gfile.MakeDirs(MODEL_DIR)
@@ -103,7 +103,7 @@ def freeze_graph(model_folder):
 
 
         #下面是用于测试， 读取pd模型，答应每个变量的名字。
-        graph = load_graph("model/body_pose_model.pb")
+        graph = load_graph("model/csn_model.pb")
         for op in graph.get_operations():
             #print(op.name, op.values())
             print("name111111111111:",op.name)
