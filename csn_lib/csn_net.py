@@ -23,6 +23,16 @@ try:
     from vgg import vgg_arg_scope, vgg_16, vgg_16_conv
 except:
     from csn_lib.vgg import vgg_arg_scope, vgg_16, vgg_16_conv
+    
+try:
+    from resnet_v2 import resnet_arg_scope, resnet_v2_50
+except:
+    from csn_lib.resnet_v2 import resnet_arg_scope, resnet_v2_50
+
+try:
+    from inception_v4 import inception_v4_arg_scope, inception_v4
+except:
+    from csn_lib.inception_v4 import inception_v4_arg_scope, inception_v4
 
 def l2norm_embed(x):
     norm2 = tf.norm(x, ord=2, axis=1)
