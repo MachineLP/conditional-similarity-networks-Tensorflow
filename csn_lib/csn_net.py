@@ -61,7 +61,7 @@ class NetArch(object):
                 # 1 x 1 x 512
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
-                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=None, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
     
@@ -87,7 +87,7 @@ class NetArch(object):
                 # 1 x 1 x 512
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
-                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=None, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
@@ -104,7 +104,7 @@ class NetArch(object):
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
                 # 1536
-                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=None, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
@@ -121,7 +121,7 @@ class NetArch(object):
                 net_vis = slim.dropout(net_vis, dropout_keep_prob, scope='Dropout_1b_out')
                 net_vis = slim.flatten(net_vis, scope='PreLogitsFlatten_out')
                 # 1536
-                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=tf.nn.relu, scope='Logits_out0')
+                net_vis = slim.fully_connected(net_vis, embedding_size, activation_fn=None, scope='Logits_out0')
                 net = slim.fully_connected(net_vis, num_classes, activation_fn=None,scope='Logits_out1')
         return net, net_vis
 
