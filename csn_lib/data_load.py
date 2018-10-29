@@ -41,7 +41,7 @@ class load_image(object):
                 continue
             data, label = self._load_img_path(path, i)
             #self.train_imgs.extend(data)
-            self.train_labels.extend(label)
+            self.train_labels.append(label)
             print (path, i)
             self.train_imgs.append(data)
             #self.train_labels.append(label)
